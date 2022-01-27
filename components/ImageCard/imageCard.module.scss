@@ -1,0 +1,12 @@
+.imageCardContainer{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    padding-top: 10px;
+
+    .image{
+        border-radius: 15px;
+    }
+}
+
