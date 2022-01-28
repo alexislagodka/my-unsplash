@@ -7,9 +7,7 @@ import {
   get,
   query,
   orderByKey,
-  ref,
-  set,
-  push
+  ref
 } from 'firebase/database'
 
 export default function Home ({ pictures }) {
