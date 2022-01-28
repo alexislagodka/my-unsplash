@@ -1,4 +1,8 @@
-.masonryGrid{
+.cardList{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  .masonryGrid{
     max-width: 1500px;
     display: -webkit-box; /* Not needed if autoprefixing */
     display: -ms-flexbox; /* Not needed if autoprefixing */
@@ -11,3 +15,8 @@
     text-align: center;
     background-clip: padding-box;
   }
+}
+
+
+
+

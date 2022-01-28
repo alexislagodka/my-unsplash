@@ -1,0 +1,19 @@
+.main{
+    width: 100%;
+    height: 100vh;
+    
+    .imageContainer{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        width: 100%;
+        height: 100%;
+
+        .image{
+            height: 80%;
+            border-radius: 16px;
+        }
+    }
+
+}

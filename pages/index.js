@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react'
-
+import Layout from '../components/Layout/Layout'
 import Head from 'next/head'
 import CardList from '../components/CardList/CardList'
 import styles from '../styles/Home.module.scss'
@@ -24,7 +23,7 @@ export default function Home({ pictures }) {
         src: defaultImages[key].urls.full,
         title: defaultImages[key].alt_description,
         width: defaultImages[key].width,
-        height: defaultImages[key].height
+        height: defaultImages[key].height,
       }
       const newPicRef = push(ref(db))
       set(newPicRef, pic)
@@ -34,24 +33,22 @@ export default function Home({ pictures }) {
     })
   }
 
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>My unsplash</title>
-        <meta name="description" content="My unsplash app" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+  return (<Layout>
+      <div className={styles.container}>
+        <Head>
+          <title>My unsplash</title>
+          <meta name="description" content="My unsplash app" />
+          <link rel="icon" href="/favicon.ico" />
+          <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+        </Head>
 
-      <main className={styles.main}>
-      {
-        pictures && <CardList pictures={pictures} />
-      }
-      </main>
-
-      <footer className={styles.footer}>
-       footer
-      </footer>
-    </div>
+        <main className={styles.main}>
+        {
+          pictures && <CardList pictures={pictures} />
+        }
+        </main>
+      </div>
+    </Layout>
   )
 }
 
@@ -63,6 +60,8 @@ export async function getStaticProps(){
   let pictures = Object.entries(picturesData).map( pics => {
     return pics
   })
+
+  pictures = pictures.reverse()
 
   return {
     props: {
