@@ -41,10 +41,13 @@ export default function AddForm ({ handleCancel }) {
   }
 
   const logout = () => {
+    setLoading(true)
     const auth = getAuth()
     signOut(auth).then(() => {
+      setLoading(false)
       console.log('Log out')
     }).catch((error) => {
+      setLoading(false)
       console.log(error)
     })
   }
@@ -107,8 +110,9 @@ export default function AddForm ({ handleCancel }) {
           </button>
         </div>
         <div>
-          {user && <div className={styles.currentUser}>Hello  {user.email}</div>}
+          {user && <div className={styles.currentUser}>Your are connected as  {user.email}</div>}
           <button className={styles.logoutButton} onClick={logout}>Log out</button>
+          <button>Test</button>
         </div>
       </Form>
     </Formik>

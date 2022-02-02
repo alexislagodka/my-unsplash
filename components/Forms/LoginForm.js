@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import styles from './Form.module.scss'
+import Loader from '../Loader/Loader'
 import * as yup from 'yup'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth'
 
 export default function LoginForm ({ handleCancel }) {
   const [authError, setAuthError] = useState(null)
+  const [loading, setLoading] = useState(false)
 
   const schema = yup.object().shape({
     email: yup.string()
@@ -27,14 +29,17 @@ export default function LoginForm ({ handleCancel }) {
   }
 
   const handleSubmit = async (values, { resetForm }) => {
+    setLoading(true)
     const auth = getAuth()
     if (values.login) {
       signInWithEmailAndPassword(auth, values.email, values.password)
         .then((userCredential) => {
           const user = userCredential.user
           console.log(user)
+          setLoading(false)
         })
         .catch((error) => {
+          setLoading(false)
           console.log(error.code)
           switch (error.code) {
             case 'auth/user-not-found':
@@ -53,10 +58,12 @@ export default function LoginForm ({ handleCancel }) {
     } else {
       createUserWithEmailAndPassword(auth, values.email, values.password)
         .then((userCredential) => {
+          setLoading(false)
           const user = userCredential.user
           console.log(user)
         })
         .catch((error) => {
+          setLoading(false)
           console.log(error.code)
           setAuthError(error.message)
           console.log(error.code)
@@ -79,6 +86,7 @@ export default function LoginForm ({ handleCancel }) {
     resetForm({})
   }
 
+  if (loading) return <div style={{ textAlign: 'center' }}><Loader /></div>
   return (
     <Formik
       initialValues={initialValues}
@@ -90,6 +98,7 @@ export default function LoginForm ({ handleCancel }) {
         submitForm
       }) => (
         <Form className={styles.form}>
+          <h2>Log in to add photos</h2>
           <label htmlFor='email'>Email</label>
           <Field id='email' name='email' type='text' placeholder='JohnDoe@mail.com' onKeyUp={(event) => { if (event.key === 'Enter') { submitForm() } }} />
           <ErrorMessage name='email' component='small' className={styles.errorMessage} />

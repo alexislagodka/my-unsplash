@@ -42,8 +42,9 @@ export default function NavBar () {
 
   return (
     <div className={styles.navBarContainer}>
+      {user && <button className={styles.profileButton}>&#xE853;</button>}
       <div className={styles.navBar}>
-        <Link href='/'>
+        <Link href='/' className={styles.logo}>
           <a>
             <Image src={logo} alt='logo' />
           </a>

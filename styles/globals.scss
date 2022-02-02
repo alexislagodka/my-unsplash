@@ -19,10 +19,12 @@ a:hover{
 }
 
 button{
+  background-color: #6c757d;
   border: none;
   border-radius: 16px;
-  height: 35px;
+  height: 40px;
   min-width: 50px ;
+  font-family: Noto Sans, "Material Icons";
 }
 button:hover{
   cursor: pointer;
