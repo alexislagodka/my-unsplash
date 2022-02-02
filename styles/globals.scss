@@ -10,8 +10,23 @@ body {
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
+  color: #3DB46D;
+  text-decoration: underline;
+}
+a:hover{
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+button{
+  border: none;
+  border-radius: 16px;
+  height: 35px;
+  min-width: 50px ;
+}
+button:hover{
+  cursor: pointer;
+  opacity: 0.8;
 }
 
 * {

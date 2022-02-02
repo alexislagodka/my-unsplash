@@ -3,7 +3,7 @@ import styles from './imageCard.module.scss'
 import Img from 'next/image'
 import Link from 'next/link'
 
-export default function ImageCard ({ id, src, title, href, width, height }) {
+export default function ImageCard ({ id, src, title, href, width, height, displayWidth }) {
   const h = height * (385 / width)
 
   return (

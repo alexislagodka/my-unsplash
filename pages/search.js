@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import styles from '../styles/Search.module.scss'
 import { useRouter } from 'next/router'
 
 import Layout from '../components/Layout/Layout'
@@ -9,43 +10,40 @@ import { orderByKey, ref, get, query } from 'firebase/database'
 export default function search () {
   const [pictures, setPictures] = useState([])
 
-  const title = useRouter().query.title
+  const name = useRouter().query.name
 
   useEffect(() => {
-    if (title) {
-      console.log('Search : ' + title)
-
-      const picturesWithTitle = query(ref(db), orderByKey())
+    if (name) {
+      const picturesWithTitle = query(ref(db, 'pictures'), orderByKey())
       get(picturesWithTitle)
         .then(snapshot => {
-          const picturesData = snapshot.val()
-          const pictures = Object.entries(picturesData).map(pics => {
-            return pics
-          })
-          const result = []
-          pictures.forEach(pic => {
-            const picTitle = pic[1].title
-            if (picTitle) {
-              if (picTitle.toLowerCase().includes(title.toLowerCase())) result.push(pic)
-            }
-          })
-          console.log(result)
-
-          setPictures(result)
+          if (snapshot.exists()) {
+            const picturesData = snapshot.val()
+            const pictures = Object.entries(picturesData).map(pics => {
+              return pics
+            })
+            const result = []
+            pictures.forEach(pic => {
+              const picTitle = pic[1].name
+              if (picTitle) {
+                if (picTitle.toLowerCase().includes(name.toLowerCase())) result.push(pic)
+              }
+            })
+            setPictures(result)
+          }
         })
     }
-  }, [title])
+  }, [name])
 
   return (
     <Layout>
-      {console.log(pictures)}
-      <main>
+      <div className={styles.search}>
         {
           pictures.length !== 0
             ? <CardList pictures={pictures} />
             : <h2>No pictures found.</h2>
         }
-      </main>
+      </div>
     </Layout>
   )
 }
