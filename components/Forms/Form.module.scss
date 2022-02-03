@@ -22,7 +22,8 @@
         height: 55px
     }
     .errorMessage{
-        color: rgb(235, 5, 5);
+        color: rgb(255, 125, 125);
+        font-weight: bold;
     }
 
     .buttonsContainer{
@@ -33,6 +34,7 @@
         button{
             width: 105px;
             height: 55px;
+            margin-left: 10px;
             border-radius: 12px;
             border: none;
 

@@ -5,19 +5,30 @@ import Modal from '../../components/Modal/Modal'
 import DeleteForm from '../../components/Forms/DeleteForm'
 import db from '../../utils/firebase'
 import { get, ref, child } from 'firebase/database'
-import { getAuth } from 'firebase/auth'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
 
 export default function PicturePage ({ picture }) {
   const pictureId = Object.keys(picture)[0]
   const { src, title, uidowner } = picture[pictureId].pictureData
   const [isOwner, setIsOwner] = useState(false)
   const [show, setShow] = useState(false)
+  const [user, setUser] = useState(null)
 
-  useEffect(() => {
-    const auth = getAuth()
-    const uid = auth.currentUser.uid
-    if (uid === uidowner) setIsOwner(true)
-  }, [])
+  // Handle Auth
+  const auth = getAuth()
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      setUser(user)
+      if (user.uid === uidowner) {
+        setIsOwner(true)
+      } else {
+        setIsOwner(false)
+      }
+    } else {
+      setUser(null)
+      setIsOwner(false)
+    }
+  })
 
   return (
     <Layout>

@@ -4,6 +4,7 @@ import Link from 'next/link'
 import styles from './NavBar.module.scss'
 import logo from '../../public/my_unsplash_logo.svg'
 import Modal from '../Modal/Modal'
+import Admin from '../Admin/Admin'
 import AddForm from '../Forms/AddForm'
 import LoginForm from '../Forms/LoginForm'
 
@@ -16,7 +17,8 @@ import {
 
 export default function NavBar () {
   const [text, setText] = useState('')
-  const [show, setShow] = useState(false)
+  const [showForm, setShowForm] = useState(false)
+  const [showAdmin, setShowAdmin] = useState(false)
   const [user, setUser] = useState(null)
 
   const router = useRouter()
@@ -42,7 +44,7 @@ export default function NavBar () {
 
   return (
     <div className={styles.navBarContainer}>
-      {user && <button className={styles.profileButton}>&#xE853;</button>}
+      {user && <button className={styles.profileButton} onClick={() => setShowAdmin(true)}>&#xE853;</button>}
       <div className={styles.navBar}>
         <Link href='/' className={styles.logo}>
           <a>
@@ -56,15 +58,19 @@ export default function NavBar () {
           onChange={(e) => setText(e.target.value)}
           onKeyUp={handleKeyUp}
         />
-        <button className={styles.button} onClick={() => setShow(true)}>Add photo</button>
+        <button className={styles.button} onClick={() => setShowForm(true)}>Add photo</button>
       </div>
-      <Modal show={show} handleClose={() => setShow(false)}>
+      <Modal show={showForm} handleClose={() => setShowForm(false)}>
         {
           user
-            ? <AddForm handleCancel={() => setShow(false)} />
-            : <LoginForm handleCancel={() => setShow(false)} />
+            ? <AddForm handleCancel={() => setShowForm(false)} />
+            : <LoginForm handleCancel={() => setShowForm(false)} />
         }
-
+      </Modal>
+      <Modal show={showAdmin} handleClose={() => setShowAdmin(false)} admin>
+        {
+          showAdmin && <Admin handleCancel={() => setShowAdmin(false)} />
+        }
       </Modal>
     </div>
   )

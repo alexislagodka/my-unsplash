@@ -6,7 +6,7 @@ import Loader from '../Loader/Loader'
 import { useRouter } from 'next/router'
 import db from '../../utils/firebase'
 import { update, push, child, ref } from 'firebase/database'
-import { getAuth, signOut, onAuthStateChanged } from 'firebase/auth'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
 
 export default function AddForm ({ handleCancel }) {
   const [loading, setLoading] = useState(false)
@@ -38,18 +38,6 @@ export default function AddForm ({ handleCancel }) {
   const initialValues = {
     name: '',
     url: ''
-  }
-
-  const logout = () => {
-    setLoading(true)
-    const auth = getAuth()
-    signOut(auth).then(() => {
-      setLoading(false)
-      console.log('Log out')
-    }).catch((error) => {
-      setLoading(false)
-      console.log(error)
-    })
   }
 
   const addPicture = async picture => {
@@ -108,11 +96,6 @@ export default function AddForm ({ handleCancel }) {
           <button className={styles.submitButton} type='submit'>
             Submit
           </button>
-        </div>
-        <div>
-          {user && <div className={styles.currentUser}>Your are connected as  {user.email}</div>}
-          <button className={styles.logoutButton} onClick={logout}>Log out</button>
-          <button>Test</button>
         </div>
       </Form>
     </Formik>

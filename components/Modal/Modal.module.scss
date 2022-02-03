@@ -9,7 +9,7 @@
 
     .modalMain {
         position:fixed;
-        background: white;
+        background: #FFFF;
         padding: 20px;
 
         width: 80%;
@@ -26,6 +26,9 @@
         display: flex;
         flex-direction: column;
         }
+    .modalAdmin {
+        background-color: #ab61ff;
+    }
   }
   
 

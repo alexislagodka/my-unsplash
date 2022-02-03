@@ -11,6 +11,7 @@ export default function LoginForm ({ handleCancel }) {
 
   const schema = yup.object().shape({
     email: yup.string()
+      .email('Must be a valid email')
       .required('This field is required'),
     password: yup
       .string()
