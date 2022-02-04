@@ -4,7 +4,7 @@ import styles from './Admin.module.scss'
 export default function AdminMenu ({ user, logout, changeEmail, changePassword, deleteAccount }) {
   return (
     <div className={styles.adminMain}>
-      <h2>Hello '{user && user.email}'</h2>
+      <h2>Hello &apos;{user && user.email}&apos;</h2>
       <div className={styles.adminActions}>
         <button className={styles.actionButton} onClick={logout}>Log out</button>
         <button className={styles.actionButton} onClick={changeEmail}>Change email</button>

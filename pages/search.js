@@ -7,7 +7,7 @@ import CardList from '../components/CardList/CardList'
 import db from '../utils/firebase'
 import { orderByKey, ref, get, query } from 'firebase/database'
 
-export default function search () {
+export default function Search () {
   const [pictures, setPictures] = useState([])
 
   const name = useRouter().query.name

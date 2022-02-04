@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styles from './picturePage.module.scss'
 import Layout from '../../components/Layout/Layout'
+import Image from 'next/image'
 import Modal from '../../components/Modal/Modal'
 import DeleteForm from '../../components/Forms/DeleteForm'
 import db from '../../utils/firebase'
@@ -9,7 +10,7 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth'
 
 export default function PicturePage ({ picture }) {
   const pictureId = Object.keys(picture)[0]
-  const { src, title, uidowner } = picture[pictureId].pictureData
+  const { src, title, uidowner, width, height } = picture[pictureId].pictureData
   const [isOwner, setIsOwner] = useState(false)
   const [show, setShow] = useState(false)
   const [user, setUser] = useState(null)
@@ -40,7 +41,13 @@ export default function PicturePage ({ picture }) {
         Object.keys(picture).length === 0
           ? <h3>This pictures does not exist</h3>
           : <div className={styles.imageContainer}>
-            <img src={src} className={styles.image} alt={title} />
+            <Image 
+              className={styles.image}
+              src={src}
+              alt={title} 
+              width={width / 2}
+              height={height / 2}
+              />
             </div>
       }
 

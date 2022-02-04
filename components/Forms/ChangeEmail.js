@@ -13,9 +13,7 @@ export default function ChangeEmail ({ handleCancel }) {
 
   const handleSubmit = (values) => {
     setLoading(true)
-    console.log('submit')
     const auth = getAuth()
-    console.log(auth.currentUser.email)
     signInWithEmailAndPassword(auth, auth.currentUser.email, values.password)
       .then(() => {
         updateUserEmail(auth, values.email)
@@ -28,10 +26,8 @@ export default function ChangeEmail ({ handleCancel }) {
   }
 
   const updateUserEmail = (auth, newEmail) => {
-    console.log('update')
     updateEmail(auth.currentUser, newEmail).then(() => {
       const newAuth = getAuth()
-      console.log(newAuth.currentUser.email)
       sendEmailVerification(newAuth.currentUser)
         .then(() => {
           setNewEmail(newEmail)
@@ -79,7 +75,7 @@ export default function ChangeEmail ({ handleCancel }) {
       }) => (
         <Form className={styles.form}>
           <h2>Change email</h2>
-          <label htmlFor='password'>New email</label>
+          <label htmlFor='email'>New email</label>
           <Field id='email' name='email' type='text' required onKeyUp={(event) => { if (event.key === 'Enter') { submitForm() } }} />
           <ErrorMessage name='email' component='small' className={styles.errorMessage} />
           <label htmlFor='password'>Password</label>

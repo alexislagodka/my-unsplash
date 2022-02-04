@@ -6,21 +6,11 @@ import Loader from '../Loader/Loader'
 import { useRouter } from 'next/router'
 import db from '../../utils/firebase'
 import { update, push, child, ref } from 'firebase/database'
-import { getAuth, onAuthStateChanged } from 'firebase/auth'
+import { getAuth } from 'firebase/auth'
 
 export default function AddForm ({ handleCancel }) {
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
-  const [user, setUser] = useState(null)
-
-  const auth = getAuth()
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      setUser(user)
-    } else {
-      setUser(null)
-    }
-  })
 
   const router = useRouter()
   const forceReload = () => {

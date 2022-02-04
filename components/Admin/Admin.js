@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import styles from './Admin.module.scss'
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth'
+import Loader from '../Loader/Loader'
 import AdminMenu from './AdminMenu'
 import ChangeEmail from '../Forms/ChangeEmail'
 import ChangePassword from '../Forms/ChangePassword'
+import DeleteAccount from '../Forms/DeleteAccount'
 
 export default function Admin ({ handleCancel }) {
   const [action, setAction] = useState('')
@@ -24,7 +26,6 @@ export default function Admin ({ handleCancel }) {
     const auth = getAuth()
     signOut(auth).then(() => {
       setLoading(false)
-      console.log('Log out')
     }).catch((error) => {
       setLoading(false)
       console.log(error)
@@ -33,26 +34,27 @@ export default function Admin ({ handleCancel }) {
   }
   let component
   switch (action) {
-    case 'email':
+    case 'changeEmail':
       component = <ChangeEmail handleCancel={() => setAction('')} />
       break
-    case 'password':
+    case 'changePassword':
       component = <ChangePassword handleCancel={() => setAction('')} />
       break
     case 'deleteAccount':
-      component = <div>Delete Account</div>
+      component = <DeleteAccount handleCancel={() => setAction('')} />
       break
     default:
       component = (
         <AdminMenu
           user={user}
           logout={logout}
-          changeEmail={() => setAction('email')}
-          changePassword={() => setAction('password')}
+          changeEmail={() => setAction('changeEmail')}
+          changePassword={() => setAction('changePassword')}
+          deleteAccount={() => setAction('deleteAccount')}
         />
       )
   }
-
+  if (loading) return <div style={{ textAlign: 'center' }}><Loader /></div>
   return (
     <div className={styles.admin}>
       {

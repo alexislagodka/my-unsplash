@@ -37,7 +37,6 @@ export default function NavBar () {
     if (event.key === 'Enter') {
       if (text !== '') {
         router.push(`/search?name=${text}`)
-        router.reload()
       }
     }
   }

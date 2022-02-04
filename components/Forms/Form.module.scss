@@ -45,10 +45,6 @@
             line-height: 22px;
             /* identical to box height */
         }
-        button:hover{
-            cursor: pointer;
-            opacity: 0.8;
-        }
 
         .cancelButton{
             background: #FFFFFF;
@@ -65,23 +61,27 @@
         }
 
     }
-    .createAccountButton{
-        background: #FFFFFF;
-        border: none;
-
-    }
-    .createAccountButton:hover{
-        cursor: pointer;
-        opacity: 0.8;
-    }
-    .logoutButton{
-        // background: #FFFFFF;
-        // //border: none;
-        //color: red;
-    }
-    .logoutButton:hover{
-        cursor: pointer;
-        opacity: 0.8;
+    .accountOptions{
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+        .createAccountButton{
+            background-color: #9c4df7;
+            color: #FFFF;
+            font-weight: bold;
+            height: 55px;
+            padding: 15px;
+            border: none;
+    
+        }
+        
+        .resetPasswordButton{
+            height: 55px;
+            padding: 15px;
+            color: #FFFF;
+            font-weight: bold;
+        }
+     
     }
 
     

@@ -4,10 +4,13 @@ import Loader from '../Loader/Loader'
 import * as yup from 'yup'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth'
+import ResetPassWord from './ResetPassWord'
 
 export default function LoginForm ({ handleCancel }) {
   const [authError, setAuthError] = useState(null)
   const [loading, setLoading] = useState(false)
+  const [connectTry, setTry] = useState(0)
+  const [showResetPwdForm, setSowResestPwdForm] = useState(false)
 
   const schema = yup.object().shape({
     email: yup.string()
@@ -31,6 +34,7 @@ export default function LoginForm ({ handleCancel }) {
 
   const handleSubmit = async (values, { resetForm }) => {
     setLoading(true)
+    setTry(connectTry + 1)
     const auth = getAuth()
     if (values.login) {
       signInWithEmailAndPassword(auth, values.email, values.password)
@@ -58,10 +62,8 @@ export default function LoginForm ({ handleCancel }) {
         })
     } else {
       createUserWithEmailAndPassword(auth, values.email, values.password)
-        .then((userCredential) => {
+        .then(() => {
           setLoading(false)
-          const user = userCredential.user
-          console.log(user)
         })
         .catch((error) => {
           setLoading(false)
@@ -88,6 +90,7 @@ export default function LoginForm ({ handleCancel }) {
   }
 
   if (loading) return <div style={{ textAlign: 'center' }}><Loader /></div>
+  if (showResetPwdForm) return <ResetPassWord handleCancel={() => setSowResestPwdForm(false)} />
   return (
     <Formik
       initialValues={initialValues}
@@ -124,7 +127,7 @@ export default function LoginForm ({ handleCancel }) {
               Log In
             </button>
           </div>
-          <div>
+          <div className={styles.accountOptions}>
             <button
               className={styles.createAccountButton}
               type='button'
@@ -137,6 +140,16 @@ export default function LoginForm ({ handleCancel }) {
             >
               Create account
             </button>
+            {
+              connectTry >= 2 &&
+                <button
+                  className={styles.resetPasswordButton}
+                  type='button'
+                  onClick={() => setSowResestPwdForm(true)}
+                >
+                  Reset password
+                </button>
+            }
           </div>
         </Form>
       )}

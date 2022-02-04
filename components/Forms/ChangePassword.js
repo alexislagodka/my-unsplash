@@ -12,9 +12,7 @@ export default function ChangePassword ({ handleCancel }) {
 
   const handleSubmit = (values) => {
     setLoading(true)
-    console.log('submit')
     const auth = getAuth()
-    console.log(auth.currentUser.email)
     signInWithEmailAndPassword(auth, auth.currentUser.email, values.password)
       .then(() => {
         updateUserPassword(auth, values.newPassword)
@@ -27,7 +25,6 @@ export default function ChangePassword ({ handleCancel }) {
   }
 
   const updateUserPassword = (auth, newPassword) => {
-    console.log('update')
     updatePassword(auth.currentUser, newPassword)
       .then(() => {
         console.log(auth.currentUser.email)
@@ -58,6 +55,8 @@ export default function ChangePassword ({ handleCancel }) {
       )
   })
   const initialValues = {
+    newPassword: '',
+    confirmPassword: '',
     password: ''
   }
   if (loading) return <div style={{ textAlign: 'center' }}><Loader /></div>
@@ -79,10 +78,10 @@ export default function ChangePassword ({ handleCancel }) {
       }) => (
         <Form className={styles.form}>
           <h2>Change email</h2>
-          <label htmlFor='password'>New password</label>
+          <label htmlFor='newPassword'>New password</label>
           <Field id='newPassword' name='newPassword' type='password' required onKeyUp={(event) => { if (event.key === 'Enter') { submitForm() } }} />
           <ErrorMessage name='newPassword' component='small' className={styles.errorMessage} />
-          <label htmlFor='password'>Confirm new password</label>
+          <label htmlFor='confirmPassword'>Confirm new password</label>
           <Field id='confirmPassword' name='confirmPassword' type='password' required onKeyUp={(event) => { if (event.key === 'Enter') { submitForm() } }} />
           <ErrorMessage name='confirmPassword' component='small' className={styles.errorMessage} />
           <label htmlFor='password'>Password</label>

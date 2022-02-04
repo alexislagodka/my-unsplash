@@ -41,7 +41,7 @@ export default function CardList ({ pictures }) {
       default:
         setPics(pictures)
     }
-  }, [activeFilter])
+  }, [activeFilter, auth, pictures])
 
   const getMorePics = () => {
     if (pics.length > displayedPics.length) {
