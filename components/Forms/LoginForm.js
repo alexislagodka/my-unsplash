@@ -38,9 +38,7 @@ export default function LoginForm ({ handleCancel }) {
     const auth = getAuth()
     if (values.login) {
       signInWithEmailAndPassword(auth, values.email, values.password)
-        .then((userCredential) => {
-          const user = userCredential.user
-          console.log(user)
+        .then(() => {
           setLoading(false)
         })
         .catch((error) => {

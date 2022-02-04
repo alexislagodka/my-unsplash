@@ -27,7 +27,6 @@ export default function ChangePassword ({ handleCancel }) {
   const updateUserPassword = (auth, newPassword) => {
     updatePassword(auth.currentUser, newPassword)
       .then(() => {
-        console.log(auth.currentUser.email)
         setSuccess(true)
       }).catch((error) => {
         setLoading(false)
