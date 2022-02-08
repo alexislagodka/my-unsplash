@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import styles from '../styles/Search.module.scss'
 import { useRouter } from 'next/router'
 
 import Layout from '../components/Layout/Layout'
@@ -37,7 +36,7 @@ export default function Search () {
 
   return (
     <Layout>
-      <div className={styles.search}>
+      <div className='flex justify-center'>
         {
           pictures.length !== 0
             ? <CardList pictures={pictures} />

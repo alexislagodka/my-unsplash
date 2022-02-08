@@ -1,6 +1,5 @@
 import Layout from '../components/Layout/Layout'
 import CardList from '../components/CardList/CardList'
-import styles from '../styles/Home.module.scss'
 import db from '../utils/firebase'
 import {
   get,
@@ -23,7 +22,7 @@ export default function Home ({ pictures }) {
 
   return (
     <Layout>
-      <div className={styles.home}>
+      <div className='w-full flex justify-center'>
         {
         pictures && <CardList pictures={displayedPics} />
       }
