@@ -107,9 +107,26 @@ export default function LoginForm ({ handleCancel }) {
           <Field id='password' name='password' type='password' placeholder='Password' onKeyUp={(event) => { if (event.key === 'Enter') { submitForm() } }} />
           <ErrorMessage name='password' component='small' />
           {authError}
-          <div className='flex justify-between pt-6'>
+          <div className='flex justify-end pt-6'>
+            <button className='cancelButton' type='button' onClick={handleCancel}>
+              Cancel
+            </button>
             <button
-              className='adminButton'
+              className='submitButton'
+              type='button'
+              id='loginButton'
+              onClick={() => {
+                setFieldValue('createAccount', false)
+                setFieldValue('login', true)
+                submitForm()
+              }}
+            >
+              Log In
+            </button>
+          </div>
+          <div>
+            <button
+              className='adminZone'
               type='button'
               id='createAccountButton'
               onClick={() => {
@@ -120,23 +137,6 @@ export default function LoginForm ({ handleCancel }) {
             >
               Create account
             </button>
-            <div>
-              <button className='cancelButton' type='button' onClick={handleCancel}>
-                Cancel
-              </button>
-              <button
-                className='submitButton'
-                type='button'
-                id='loginButton'
-                onClick={() => {
-                  setFieldValue('createAccount', false)
-                  setFieldValue('login', true)
-                  submitForm()
-                }}
-              >
-                Log In
-              </button>
-            </div>
           </div>
           <div>
             {
