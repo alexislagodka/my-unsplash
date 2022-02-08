@@ -14,8 +14,7 @@
   }
 
   body {
-    /* font-family: 'Noto Sans', sans-serif, 'Material Icons'; */
-    font-family: 'Festive', cursive, 'Material Icons';
+    font-family: 'Noto Sans', sans-serif, 'Material Icons';
     font-weight: 500;
     @apply text-base;
     @apply text-zinc-700;
