@@ -1,12 +1,31 @@
-import React from 'react'
-import styles from './Modal.module.scss'
+import React, { useEffect, useRef, useState } from 'react'
 
-export default function Modal ({ show, children, admin }) {
-  const showHideStyle = show ? 'block' : 'none'
+export default function Modal ({ children, handleClose, admin }) {
+  // const showHideStyle = show ? 'block' : 'hidden'
+  const ref = useRef()
+  const [isMenuOpen, setIsMenuOpen] = useState(true)
+
+  useEffect(() => {
+    const checkIfClickedOutside = e => {
+      // If the menu is open and the clicked target is not within the menu,
+      // then close the menu
+      if (isMenuOpen && ref.current && !ref.current.contains(e.target)) {
+        setIsMenuOpen(false)
+        handleClose()
+      }
+    }
+
+    document.addEventListener('mousedown', checkIfClickedOutside)
+
+    return () => {
+      // Cleanup the event listener
+      document.removeEventListener('mousedown', checkIfClickedOutside)
+    }
+  }, [isMenuOpen])
 
   return (
-    <div className={styles.modal} style={{ display: showHideStyle }}>
-      <section className={styles.modalMain} style={{ backgroundColor: admin && '#ab61ff' }}>
+    <div className='modal'>
+      <section ref={ref} className={`modalMain ${admin && 'adminZone'}`}>
         {children}
       </section>
     </div>

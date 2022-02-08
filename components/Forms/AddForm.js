@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import styles from './Form.module.scss'
 import * as yup from 'yup'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import Loader from '../Loader/Loader'
@@ -71,19 +70,19 @@ export default function AddForm ({ handleCancel }) {
       validationSchema={schema}
       onSubmit={(values) => handleSubmit(values)}
     >
-      <Form className={styles.form}>
+      <Form className='grid'>
         <h2>Add new photo</h2>
         <label htmlFor='name'>Name</label>
         <Field id='name' name='name' type='text' placeholder='Hello world' />
-        <ErrorMessage name='name' component='small' className={styles.errorMessage} />
+        <ErrorMessage name='name' component='small' />
         <label htmlFor='url'>Photo URL</label>
         <Field id='url' name='url' type='text' placeholder='https://images.unsplash.com/photo-1501949997128-2fdb9f6428f1' />
-        <ErrorMessage name='url' component='small' className={styles.errorMessage} />
-        <div className={styles.buttonsContainer}>
-          <button className={styles.cancelButton} type='button' onClick={handleCancel}>
+        <ErrorMessage name='url' component='small' />
+        <div className='flex justify-end pt-6'>
+          <button className='cancelButton' type='button' onClick={handleCancel}>
             Cancel
           </button>
-          <button className={styles.submitButton} type='submit'>
+          <button className='submitButton' type='submit'>
             Submit
           </button>
         </div>

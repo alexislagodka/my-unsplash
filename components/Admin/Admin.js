@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import styles from './Admin.module.scss'
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth'
 import Loader from '../Loader/Loader'
 import AdminMenu from './AdminMenu'
@@ -51,20 +50,18 @@ export default function Admin ({ handleCancel }) {
           changeEmail={() => setAction('changeEmail')}
           changePassword={() => setAction('changePassword')}
           deleteAccount={() => setAction('deleteAccount')}
+          handleCancel={() => handleCancel()}
         />
       )
   }
   if (loading) return <div style={{ textAlign: 'center' }}><Loader /></div>
   return (
-    <div className={styles.admin}>
+    <div>
       {
         user
           ? component
-          : <div>Sorry you are not connected.</div>
+          : <h2>Sorry you are not connected.</h2>
     }
-      <div className={styles.cancelButtonContainer}>
-        <button className={styles.cancelButton} onClick={() => handleCancel()}>Close</button>
-      </div>
     </div>
   )
 }

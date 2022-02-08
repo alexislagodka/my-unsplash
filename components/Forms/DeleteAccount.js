@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import styles from './Form.module.scss'
 import * as yup from 'yup'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import { getAuth, deleteUser, signInWithEmailAndPassword } from 'firebase/auth'
@@ -62,17 +61,17 @@ export default function DeleteAccount ({ handleCancel }) {
       {({
         submitForm
       }) => (
-        <Form className={styles.form}>
+        <Form className='grid'>
           <h2>Are you sure to delete your account ?</h2>
           <label htmlFor='password'>Password</label>
           <Field id='password' name='password' type='password' required onKeyUp={(event) => { if (event.key === 'Enter') { submitForm() } }} />
-          <ErrorMessage name='password' component='small' className={styles.errorMessage} />
+          <ErrorMessage name='password' component='small' />
           {authError}
-          <div className={styles.buttonsContainer}>
-            <button className={styles.cancelButton} type='button' onClick={handleCancel}>
+          <div className='flex justify-end pt-6'>
+            <button className='cancelButton' type='button' onClick={handleCancel}>
               Cancel
             </button>
-            <button className={styles.deleteButton} type='submit'>
+            <button className='deleteButton' type='submit'>
               delete
             </button>
           </div>

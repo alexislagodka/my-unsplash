@@ -41,13 +41,13 @@ export default function PicturePage ({ picture }) {
         Object.keys(picture).length === 0
           ? <h3>This pictures does not exist</h3>
           : <div className={styles.imageContainer}>
-            <Image 
+            <Image
               className={styles.image}
               src={src}
-              alt={title} 
+              alt={title}
               width={width / 2}
               height={height / 2}
-              />
+            />
             </div>
       }
 

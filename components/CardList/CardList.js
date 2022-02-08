@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import styles from './CardList.module.scss'
 import Masonry from 'react-masonry-css'
 
 import ImageCard from '../ImageCard/ImageCard'
@@ -54,25 +53,26 @@ export default function CardList ({ pictures }) {
 
   const breakpointColumnsObj = {
     default: 3,
-    1200: 2,
-    800: 1
+    1200: 2
   }
 
+  const activeClass = 'focus:outline-none focus:ring focus:ring-gray-600 '
+
   return (
-    <div className={styles.cardList}>
-      <div className={styles.listHeader}>
-        <div className={styles.buttonsContainer}>
-          <button className={activeFilter === 'All' ? styles.active : null} onClick={() => setActiveFilter('All')}>All</button>
+    <div className='w-full px-2 max-w-7xl'>
+      <div className='flex justify-between items-center'>
+        <div className=''>
+          <button className={`filterButton ${activeFilter === 'All' ? activeClass : null}`} onClick={() => setActiveFilter('All')}>All</button>
           {
-            user && <button className={activeFilter === 'MyPictures' ? styles.active : null} onClick={() => setActiveFilter('MyPictures')}>My pictures</button>
+            user && <button className={`filterButton ${activeFilter === 'MyPictures' ? activeClass : null}`} onClick={() => setActiveFilter('MyPictures')}>My pictures</button>
           }
         </div>
-        <h3>{pics.length} pictures</h3>
+        <div>{pics.length} pictures</div>
       </div>
       <Masonry
         breakpointCols={breakpointColumnsObj}
-        className={styles.masonryGrid}
-        columnClassName={styles.masonryColumn}
+        className='flex -ml-3 w-auto'
+        columnClassName='pl-3'
       >
         {
           displayedPics.map(displayedPic => {
@@ -89,10 +89,10 @@ export default function CardList ({ pictures }) {
 
         }
       </Masonry>
-      <div className={styles.listFooter}>
+      <div className='w-full flex justify-center py-6'>
         {
           hasMore
-            ? <button onClick={getMorePics} className={styles.moreButton}>More</button>
+            ? <button onClick={getMorePics}>More ...</button>
             : <div>
               There is nothing more to load
             </div>

@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import styles from './Form.module.scss'
 import * as yup from 'yup'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import { getAuth, updatePassword, signInWithEmailAndPassword } from 'firebase/auth'
@@ -75,23 +74,23 @@ export default function ChangePassword ({ handleCancel }) {
       {({
         submitForm
       }) => (
-        <Form className={styles.form}>
+        <Form className='grid'>
           <h2>Change email</h2>
           <label htmlFor='newPassword'>New password</label>
           <Field id='newPassword' name='newPassword' type='password' required onKeyUp={(event) => { if (event.key === 'Enter') { submitForm() } }} />
-          <ErrorMessage name='newPassword' component='small' className={styles.errorMessage} />
+          <ErrorMessage name='newPassword' component='small' />
           <label htmlFor='confirmPassword'>Confirm new password</label>
           <Field id='confirmPassword' name='confirmPassword' type='password' required onKeyUp={(event) => { if (event.key === 'Enter') { submitForm() } }} />
-          <ErrorMessage name='confirmPassword' component='small' className={styles.errorMessage} />
+          <ErrorMessage name='confirmPassword' component='small' />
           <label htmlFor='password'>Password</label>
           <Field id='password' name='password' type='password' required onKeyUp={(event) => { if (event.key === 'Enter') { submitForm() } }} />
-          <ErrorMessage name='password' component='small' className={styles.errorMessage} />
+          <ErrorMessage name='password' component='small' />
           {authError}
-          <div className={styles.buttonsContainer}>
-            <button className={styles.cancelButton} type='button' onClick={handleCancel}>
+          <div className='flex justify-end pt-6'>
+            <button className='cancelButton' type='button' onClick={handleCancel}>
               Cancel
             </button>
-            <button className={styles.submitButton} type='submit'>
+            <button className='submitButton' type='submit'>
               Submit
             </button>
           </div>

@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import styles from './Form.module.scss'
 import Loader from '../Loader/Loader'
 import * as yup from 'yup'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
@@ -99,35 +98,18 @@ export default function LoginForm ({ handleCancel }) {
         setFieldValue,
         submitForm
       }) => (
-        <Form className={styles.form}>
+        <Form className='grid'>
           <h2>Log in to add photos</h2>
           <label htmlFor='email'>Email</label>
           <Field id='email' name='email' type='text' placeholder='JohnDoe@mail.com' onKeyUp={(event) => { if (event.key === 'Enter') { submitForm() } }} />
-          <ErrorMessage name='email' component='small' className={styles.errorMessage} />
+          <ErrorMessage name='email' component='small' />
           <label htmlFor='password'>Password</label>
           <Field id='password' name='password' type='password' placeholder='Password' onKeyUp={(event) => { if (event.key === 'Enter') { submitForm() } }} />
-          <ErrorMessage name='password' component='small' className={styles.errorMessage} />
+          <ErrorMessage name='password' component='small' />
           {authError}
-          <div className={styles.buttonsContainer}>
-            <button className={styles.cancelButton} type='button' onClick={handleCancel}>
-              Cancel
-            </button>
+          <div className='flex justify-between pt-6'>
             <button
-              className={styles.submitButton}
-              type='button'
-              id='loginButton'
-              onClick={() => {
-                setFieldValue('createAccount', false)
-                setFieldValue('login', true)
-                submitForm()
-              }}
-            >
-              Log In
-            </button>
-          </div>
-          <div className={styles.accountOptions}>
-            <button
-              className={styles.createAccountButton}
+              className='adminButton'
               type='button'
               id='createAccountButton'
               onClick={() => {
@@ -138,10 +120,28 @@ export default function LoginForm ({ handleCancel }) {
             >
               Create account
             </button>
+            <div>
+              <button className='cancelButton' type='button' onClick={handleCancel}>
+                Cancel
+              </button>
+              <button
+                className='submitButton'
+                type='button'
+                id='loginButton'
+                onClick={() => {
+                  setFieldValue('createAccount', false)
+                  setFieldValue('login', true)
+                  submitForm()
+                }}
+              >
+                Log In
+              </button>
+            </div>
+          </div>
+          <div>
             {
               connectTry >= 2 &&
                 <button
-                  className={styles.resetPasswordButton}
                   type='button'
                   onClick={() => setSowResestPwdForm(true)}
                 >

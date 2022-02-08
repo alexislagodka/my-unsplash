@@ -1,5 +1,4 @@
 import React from 'react'
-import styles from './imageCard.module.scss'
 import Img from 'next/image'
 import Link from 'next/link'
 
@@ -7,7 +6,7 @@ export default function ImageCard ({ id, src, title, href, width, height, displa
   const h = height * (385 / width)
 
   return (
-    <div className={styles.imageCardContainer}>
+    <div className='flex justify-center pt-10 w-full'>
       <Link href={`/picture/${id}`}>
         <a
           style={{
@@ -18,7 +17,7 @@ export default function ImageCard ({ id, src, title, href, width, height, displa
           }}
         >
           <Img
-            className={styles.image}
+            className='rounded-xl'
             src={src}
             alt={title}
             placeholder='blur'

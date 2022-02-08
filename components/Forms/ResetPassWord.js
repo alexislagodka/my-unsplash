@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import styles from './Form.module.scss'
 import * as yup from 'yup'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import { getAuth, sendPasswordResetEmail } from 'firebase/auth'
@@ -40,7 +39,7 @@ export default function ResetPassword ({ handleCancel }) {
     return (
       <div>
         <p>A reset password email has been send to {email}</p>
-        <button className={styles.cancelButton} onClick={handleCancel}>Close</button>
+        <button className='cancelButton' onClick={handleCancel}>Close</button>
       </div>
     )
   }
@@ -53,17 +52,17 @@ export default function ResetPassword ({ handleCancel }) {
       {({
         submitForm
       }) => (
-        <Form className={styles.form}>
+        <Form className='grid'>
           <h2>Reset your password</h2>
           <label htmlFor='password'>Email</label>
           <Field id='email' name='email' type='text' required onKeyUp={(event) => { if (event.key === 'Enter') { submitForm() } }} />
-          <ErrorMessage name='email' component='small' className={styles.errorMessage} />
+          <ErrorMessage name='email' component='small' />
           {resetError}
-          <div className={styles.buttonsContainer}>
-            <button className={styles.cancelButton} type='button' onClick={handleCancel}>
+          <div className='flex justify-end pt-6'>
+            <button className='cancelButton' type='button' onClick={handleCancel}>
               Cancel
             </button>
-            <button className={styles.submitButton} type='submit'>
+            <button className='submitButton' type='submit'>
               Submit
             </button>
           </div>

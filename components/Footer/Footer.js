@@ -1,10 +1,9 @@
 import React from 'react'
-import styles from './Footer.module.scss'
 
 export default function Footer () {
   return (
-    <footer className={styles.footer}>
-      &copy; Alexis Lagodka
+    <footer className='flex justify-center items-center w-full h-20 border'>
+      devchallenge.io &copy; Alexis Lagodka
     </footer>
   )
 }

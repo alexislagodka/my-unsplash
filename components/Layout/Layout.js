@@ -5,7 +5,7 @@ import Footer from '../Footer/Footer'
 
 export default function Layout ({ children }) {
   return (
-    <>
+    <div className='w-full h-full'>
       <Head>
         <title>My unsplash</title>
         <meta name='description' content='My unsplash app' />
@@ -15,6 +15,6 @@ export default function Layout ({ children }) {
       <Navbar />
       <main>{children}</main>
       <Footer />
-    </>
+    </div>
   )
 }
