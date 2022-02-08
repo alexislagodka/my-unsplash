@@ -6,16 +6,9 @@ export default function ImageCard ({ id, src, title, href, width, height, displa
   const h = height * (385 / width)
 
   return (
-    <div className='flex justify-center pt-10 w-full'>
+    <div className='flex justify-center pt-3 sm:pt-10 w-full'>
       <Link href={`/picture/${id}`}>
-        <a
-          style={{
-            position: 'relative',
-            borderRadius: '16px',
-            marginTop: '10px',
-            marginBottom: '10px'
-          }}
-        >
+        <a>
           <Img
             className='rounded-xl'
             src={src}

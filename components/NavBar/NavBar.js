@@ -45,7 +45,7 @@ export default function NavBar () {
     <nav className='w-full pt-6 max-w-7xl mx-auto pt-12 pb-6 px-4 sm:px-6 lg:px-8'>
       {user && <ButtonAdmin handleClick={() => setShowAdmin(true)}>&#xE853; Profile</ButtonAdmin>}
       <div className='md:flex justify-between items-center'>
-        <div className='md: justify-center items-center md:justify-start w-full'>
+        <div className='md:flex justify-center items-center md:justify-start w-full'>
           <div className='p-6'>
             <div className='relative h-8 md:w-40'>
               <Link href='/' className='h-8'>

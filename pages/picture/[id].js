@@ -33,16 +33,13 @@ export default function PicturePage ({ picture }) {
 
   return (
     <Layout>
-      <main className={styles.main}>
-        {
-        isOwner && <button className={styles.deleteButton} onClick={() => setShow(true)}>Delete this picture</button>
-      }
+      <main className='w-full h-full'>
         {
         Object.keys(picture).length === 0
           ? <h3>This pictures does not exist</h3>
-          : <div className={styles.imageContainer}>
+          : <div className='flex justify-center items-center py-3'>
             <Image
-              className={styles.image}
+              className=''
               src={src}
               alt={title}
               width={width / 2}
@@ -50,11 +47,18 @@ export default function PicturePage ({ picture }) {
             />
             </div>
       }
+        {
+        isOwner && <div className='flex justify-center items-center h-24'>
+          <button className='deleteButton' onClick={() => setShow(true)}>Delete this picture</button>
+        </div>
 
-        <Modal show={show} handleClose={() => setShow(false)}>
-          <DeleteForm handleCancel={() => setShow(false)} idPicture={pictureId} />
-        </Modal>
-
+      }
+        {
+        (show && isOwner) &&
+          <Modal show={show} handleClose={() => setShow(false)}>
+            <DeleteForm handleCancel={() => setShow(false)} idPicture={pictureId} />
+          </Modal>
+      }
       </main>
     </Layout>
   )
