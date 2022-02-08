@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Festive&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -13,7 +14,8 @@
   }
 
   body {
-    font-family: 'Noto Sans', sans-serif, 'Material Icons';
+    /* font-family: 'Noto Sans', sans-serif, 'Material Icons'; */
+    font-family: 'Festive', cursive, 'Material Icons';
     font-weight: 500;
     @apply text-base;
     @apply text-zinc-700;
