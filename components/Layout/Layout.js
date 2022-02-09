@@ -9,7 +9,7 @@ export default function Layout ({ children }) {
       <Head>
         <title>My unsplash</title>
         <meta name='description' content='My unsplash app' />
-        <link rel='icon' href='/favicon.ico' />
+        <link rel='icon' href='/my_unsplash_logo.svg' />
         <link rel='stylesheet' href='https://pro.fontawesome.com/releases/v5.10.0/css/all.css' integrity='sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p' />
       </Head>
       <Navbar />
