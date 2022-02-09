@@ -56,15 +56,13 @@ export default function CardList ({ pictures }) {
     1200: 2
   }
 
-  const activeClass = 'focus:outline-none focus:ring focus:ring-gray-600 '
-
   return (
     <div className='w-full px-2 max-w-7xl'>
       <div className='flex justify-between items-center'>
         <div className=''>
-          <button className={`filterButton ${activeFilter === 'All' ? activeClass : null}`} onClick={() => setActiveFilter('All')}>All</button>
+          <button className={`filterButton ${activeFilter === 'All' ? 'activeFilterButton' : null}`} onClick={() => setActiveFilter('All')}>All</button>
           {
-            user && <button className={`filterButton ${activeFilter === 'MyPictures' ? activeClass : null}`} onClick={() => setActiveFilter('MyPictures')}>My pictures</button>
+            user && <button className={`filterButton ${activeFilter === 'MyPictures' ? 'activeFilterButton' : null}`} onClick={() => setActiveFilter('MyPictures')}>My pictures</button>
           }
         </div>
         <div>{pics.length} pictures</div>

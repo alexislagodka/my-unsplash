@@ -127,7 +127,13 @@
     @apply dark:text-zinc-100;
   }
   .filterButton{
-    @apply ml-1;
+    @apply 
+    ml-1
+    bg-white
+  }
+  .activeFilterButton{
+    @apply 
+    text-green-600
   }
 
   .adminZone{
