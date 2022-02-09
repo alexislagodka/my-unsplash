@@ -68,7 +68,7 @@
   button{
     @apply rounded-xl;
     @apply font-bold;
-    @apply bg-gray-400;
+    @apply bg-gray-200;
     @apply hover:opacity-75;
     @apply p-4;
     @apply h-14;
