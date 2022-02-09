@@ -10,6 +10,7 @@ import { getAuth } from 'firebase/auth'
 export default function AddForm ({ handleCancel }) {
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
+  const [error, setError] = useState(false)
 
   const router = useRouter()
   const forceReload = () => {
@@ -53,6 +54,11 @@ export default function AddForm ({ handleCancel }) {
       }
       addPicture(picture)
     }
+    img.onerror = function () {
+      console.log('error')
+      setError('Sorry this url does not contain image.')
+      setLoading(false)
+    }
     img.src = values.url
   }
   if (loading) return <div style={{ textAlign: 'center' }}><Loader /></div>
@@ -61,6 +67,14 @@ export default function AddForm ({ handleCancel }) {
       <div>
         <p>The picture was added successfully.</p>
         <a onClick={forceReload}>Go back to the list</a>
+      </div>
+    )
+  }
+  if (error) {
+    return (
+      <div>
+        <p>{error}</p>
+        <button className='cancelButton' onClick={() => setError(null)}>Retry</button>
       </div>
     )
   }

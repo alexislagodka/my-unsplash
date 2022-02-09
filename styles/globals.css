@@ -119,6 +119,7 @@
   }
  
   .cancelButton{
+    @apply bg-white;
     color: #BDBDBD;
   }
   .submitButton{
