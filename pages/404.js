@@ -8,14 +8,14 @@ export default function error404 () {
       flex
       items-center
       justify-center
-      w-screen
+      w-full
       h-screen
       bg-gradient-to-r
       from-green-600
       to-blue-400
     '
     >
-      <div className='px-40 py-20 bg-white rounded-md shadow-xl'>
+      <div className='p-5 bg-white rounded-md shadow-xl'>
         <div className='flex flex-col items-center'>
           <h1 className='font-bold text-green-600 text-9xl'>404</h1>
 
