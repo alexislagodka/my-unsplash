@@ -63,12 +63,11 @@ export default function PicturePage ({ picture }) {
   )
 }
 
-export async function getServerSideProps ({ params }) { // Pré-rendu avec récupération de données côté serveur
+export async function getStaticProps ({ params }) { // Pré-rendu avec récupération de données côté serveur
   const res = await get(child(ref(db), `pictures/${params.id}`))
   let picture = {}
   if (res.exists()) {
     const pictureData = await res.val()
-    // picture = pictureData
     picture = {
       [params.id]: {
         pictureData
@@ -80,5 +79,19 @@ export async function getServerSideProps ({ params }) { // Pré-rendu avec récu
     props: {
       picture
     }
+  }
+}
+
+export async function getStaticPaths() {
+  const res = await get(child(ref(db), 'pictures'))
+  const data = await res.val()
+  
+  const paths = Object.entries(data).map(pic => ({
+    params: {id : pic[0]}
+  }))
+
+  return {
+   paths,
+   fallback: false
   }
 }

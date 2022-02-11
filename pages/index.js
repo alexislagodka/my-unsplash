@@ -48,7 +48,6 @@ export async function getStaticProps () {
   return {
     props: {
       pictures
-    },
-    revalidate: 5
+    }
   }
 }
