@@ -6,6 +6,7 @@ import DeleteForm from '../../components/Forms/DeleteForm'
 import db from '../../utils/firebase'
 import { get, ref, child } from 'firebase/database'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
+import Link from 'next/link'
 
 export default function PicturePage ({ picture }) {
   const pictureId = Object.keys(picture)[0]
@@ -32,18 +33,22 @@ export default function PicturePage ({ picture }) {
 
   return (
     <Layout>
-      <main className='w-full h-full'>
+      <main className='w-full h-full flex flex-col items-center'>
         {
         Object.keys(picture).length === 0
           ? <h3>This pictures does not exist</h3>
-          : <div className='flex justify-center items-center py-3'>
-            <Image
-              className=''
-              src={src}
-              alt={title}
-              width={width / 2}
-              height={height / 2}
-            />
+          : <div className='w-full px-2 max-w-7xl'>
+            <Link href='/'>
+              <a className='text-green-600'>&#xE5C4; Back</a>
+            </Link>
+            <div className='flex justify-center items-center py-3'>
+              <Image
+                src={src}
+                alt={title}
+                width={width / 2}
+                height={height / 2}
+              />
+            </div>
             </div>
       }
         {
@@ -82,16 +87,16 @@ export async function getStaticProps ({ params }) { // Pré-rendu avec récupér
   }
 }
 
-export async function getStaticPaths() {
+export async function getStaticPaths () {
   const res = await get(child(ref(db), 'pictures'))
   const data = await res.val()
-  
+
   const paths = Object.entries(data).map(pic => ({
-    params: {id : pic[0]}
+    params: { id: pic[0] }
   }))
 
   return {
-   paths,
-   fallback: false
+    paths,
+    fallback: false
   }
 }
