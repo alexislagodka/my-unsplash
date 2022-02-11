@@ -18,7 +18,7 @@ export default function ButtonAdmin ({ handleClick }) {
     return () => {
       window.removeEventListener('scroll', controlNavbar)
     }
-  }, [])
+  })
 
   const fadeInClass = 'translate-y duration-300'
   const fadeOutClass = '-translate-y-12 duration-300'

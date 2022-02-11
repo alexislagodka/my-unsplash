@@ -21,7 +21,7 @@ export default function Modal ({ children, handleClose, admin }) {
       // Cleanup the event listener
       document.removeEventListener('mousedown', checkIfClickedOutside)
     }
-  }, [isMenuOpen])
+  }, [isMenuOpen, handleClose])
 
   return (
     <Transition appear show={isMenuOpen} as={Fragment}>
