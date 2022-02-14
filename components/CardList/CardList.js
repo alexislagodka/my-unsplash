@@ -29,7 +29,7 @@ const CardList = ({ user, pictures }) => {
       default:
         setPics(pictures)
     }
-  }, [activeFilter, pictures])
+  }, [activeFilter, pictures, user])
 
   const getMorePics = () => {
     if (pics.length > displayedPics.length) {

@@ -22,7 +22,7 @@ const PicturePage = ({ user, picture }) => {
         setIsOwner(false)
       }
     }
-  }, [user])
+  }, [user, uidowner])
 
   return (
     <Layout>
