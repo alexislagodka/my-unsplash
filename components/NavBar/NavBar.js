@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import withFirebase from '../../hoc/withFirebase'
 import Image from 'next/image'
 import Link from 'next/link'
 import logo from '../../public/my_unsplash_logo.svg'
@@ -10,34 +11,27 @@ import ButtonAdmin from '../Buttons/ButtonAdmin'
 
 import { useRouter } from 'next/router'
 
-import {
-  getAuth,
-  onAuthStateChanged
-} from 'firebase/auth'
-
-export default function NavBar () {
+const NavBar = ({ user }) => {
   const [text, setText] = useState('')
   const [showForm, setShowForm] = useState(false)
   const [showAdmin, setShowAdmin] = useState(false)
-  const [user, setUser] = useState(null)
 
   const router = useRouter()
-
-  // Handle Auth
-  const auth = getAuth()
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      setUser(user)
-    } else {
-      setUser(null)
-    }
-  })
 
   const handleKeyUp = event => {
     if (event.key === 'Enter') {
       if (text !== '') {
         router.push(`/search?name=${text}`)
       }
+    }
+  }
+
+  let renderAddForm
+  if (user) {
+    if (user.emailVerified) {
+      renderAddForm = <AddForm handleCancel={() => setShowForm(false)} />
+    } else {
+      renderAddForm = <div>A email was send to {user.email}. Please verify your email to add pictures.</div>
     }
   }
 
@@ -72,11 +66,12 @@ export default function NavBar () {
       {
         showForm &&
           <Modal handleClose={() => setShowForm(false)}>
-            {user
-              ? <AddForm handleCancel={() => setShowForm(false)} />
-              : <LoginForm handleCancel={() => setShowForm(false)} />}
+            {
+              user
+                ? renderAddForm
+                : <LoginForm handleCancel={() => setShowForm(false)} />
+            }
           </Modal>
-
       }
       {
         showAdmin &&
@@ -87,3 +82,7 @@ export default function NavBar () {
     </nav>
   )
 }
+
+const WrappedComponent = withFirebase(NavBar)
+
+export default WrappedComponent

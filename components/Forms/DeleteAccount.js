@@ -1,17 +1,17 @@
 import React, { useState } from 'react'
+import withFirebase from '../../hoc/withFirebase'
 import * as yup from 'yup'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
-import { getAuth, deleteUser, signInWithEmailAndPassword } from 'firebase/auth'
+import { signInWithEmailAndPassword, deleteUser } from 'firebase/auth'
 import Loader from '../Loader/Loader'
 
-export default function DeleteAccount ({ handleCancel }) {
+const DeleteAccount = ({ auth, handleCancel }) => {
   const [authError, setAuthError] = useState(null)
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
 
   const handleSubmit = (values) => {
     setLoading(true)
-    const auth = getAuth()
     signInWithEmailAndPassword(auth, auth.currentUser.email, values.password)
       .then(() => {
         deleteUserAccount(auth.currentUser)
@@ -24,12 +24,15 @@ export default function DeleteAccount ({ handleCancel }) {
   }
 
   const deleteUserAccount = (user) => {
-    deleteUser(user).then(() => {
-      setSuccess(true)
-      setLoading(false)
-    }).catch((error) => {
-      console.log(error)
-    })
+    deleteUser(user)
+      .then(() => {
+        setLoading(false)
+        setSuccess(true)
+      }).catch((error) => {
+        setLoading(false)
+        setAuthError('Wrong password')
+        console.log(error)
+      })
   }
 
   const schema = yup.object().shape({
@@ -80,3 +83,7 @@ export default function DeleteAccount ({ handleCancel }) {
     </Formik>
   )
 }
+
+const WrappedComponent = withFirebase(DeleteAccount)
+
+export default WrappedComponent

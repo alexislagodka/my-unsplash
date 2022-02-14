@@ -1,21 +1,28 @@
 import React, { useState } from 'react'
+import withFirebase from '../../hoc/withFirebase'
 import * as yup from 'yup'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
-import { getAuth, updateEmail, signInWithEmailAndPassword, sendEmailVerification } from 'firebase/auth'
+import {
+  signInWithEmailAndPassword,
+  updateEmail,
+  getAuth,
+  sendEmailVerification
+} from 'firebase/auth'
 import Loader from '../Loader/Loader'
 
-export default function ChangeEmail ({ handleCancel }) {
+const ChangeEmail = ({ auth, handleCancel }) => {
   const [authError, setAuthError] = useState(null)
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [newEmail, setNewEmail] = useState('')
 
   const handleSubmit = (values) => {
+    console.log(auth)
     setLoading(true)
-    const auth = getAuth()
     signInWithEmailAndPassword(auth, auth.currentUser.email, values.password)
       .then(() => {
-        updateUserEmail(auth, values.email)
+        updateUserEmail(values.email)
+        setNewEmail(values.email)
       })
       .catch((error) => {
         setLoading(false)
@@ -24,15 +31,13 @@ export default function ChangeEmail ({ handleCancel }) {
       })
   }
 
-  const updateUserEmail = (auth, newEmail) => {
+  const updateUserEmail = (newEmail) => {
+    console.log('update')
     updateEmail(auth.currentUser, newEmail).then(() => {
       const newAuth = getAuth()
       sendEmailVerification(newAuth.currentUser)
-        .then(() => {
-          setNewEmail(newEmail)
-          setLoading(false)
-          setSuccess(true)
-        })
+      setLoading(false)
+      setSuccess(true)
     }).catch((error) => {
       setLoading(false)
       console.log(error)
@@ -52,14 +57,15 @@ export default function ChangeEmail ({ handleCancel }) {
       )
   })
   const initialValues = {
+    email: '',
     password: ''
   }
   if (loading) return <div style={{ textAlign: 'center' }}><Loader /></div>
   if (success) {
     return (
       <div>
-        <p>Your email address has been changed</p>
-        <p>A email verification has been send to {newEmail}</p>
+        <p className='text-white'>Your email address has been changed</p>
+        <p className='text-white'>A email verification has been send to {newEmail}</p>
       </div>
     )
   }
@@ -94,3 +100,7 @@ export default function ChangeEmail ({ handleCancel }) {
     </Formik>
   )
 }
+
+const WrappedComponent = withFirebase(ChangeEmail)
+
+export default WrappedComponent

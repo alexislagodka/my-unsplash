@@ -1,25 +1,14 @@
 import React, { useState, useEffect } from 'react'
+import withFirebase from '../../hoc/withFirebase'
 import Masonry from 'react-masonry-css'
 
 import ImageCard from '../ImageCard/ImageCard'
-import { getAuth, onAuthStateChanged } from 'firebase/auth'
 
-export default function CardList ({ pictures }) {
+const CardList = ({ user, pictures }) => {
   const [pics, setPics] = useState(pictures) // Initial pictures
   const [displayedPics, setDisplayedPics] = useState(pics.slice(0, 10)) // Displayed pictures
   const [activeFilter, setActiveFilter] = useState('All') // Initial pictures
   const [hasMore, setHasMore] = useState(true)
-  const [user, setUser] = useState(null)
-
-  // Handle auth
-  const auth = getAuth()
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      setUser(user)
-    } else {
-      setUser(null)
-    }
-  })
 
   useEffect(() => {
     setDisplayedPics(pics.slice(0, 30))
@@ -32,7 +21,7 @@ export default function CardList ({ pictures }) {
         setPics(pictures)
         break
       case 'MyPictures': {
-        const uid = auth.currentUser.uid
+        const uid = user.uid
         const myPics = pictures.filter(pic => pic[1].uidowner === uid)
         setPics(myPics)
         break
@@ -40,7 +29,7 @@ export default function CardList ({ pictures }) {
       default:
         setPics(pictures)
     }
-  }, [activeFilter, auth, pictures])
+  }, [activeFilter, pictures])
 
   const getMorePics = () => {
     if (pics.length > displayedPics.length) {
@@ -99,3 +88,7 @@ export default function CardList ({ pictures }) {
     </div>
   )
 }
+
+const WrappedComponent = withFirebase(CardList)
+
+export default WrappedComponent

@@ -1,36 +1,28 @@
 import React, { useState } from 'react'
+import withFirebase from '../../hoc/withFirebase'
 import * as yup from 'yup'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
-import { update, ref } from 'firebase/database'
-import db from '../../utils/firebase'
+import { signInWithEmailAndPassword } from 'firebase/auth'
 import Link from 'next/link'
 import Loader from '../Loader/Loader'
 
-export default function DeleteForm ({ handleCancel, idPicture }) {
+const DeleteForm = ({ auth, deletePicture, handleCancel, idPicture }) => {
   const [authError, setAuthError] = useState(null)
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const handleSubmit = (values) => {
-    const auth = getAuth()
+    setLoading(true)
     signInWithEmailAndPassword(auth, auth.currentUser.email, values.password)
-      .then((userCredential) => {
+      .then(() => {
         deletePicture(idPicture)
+        setLoading(false)
+        setSuccess(true)
       })
       .catch((error) => {
+        setLoading(false)
         setAuthError('Wrong password')
         console.log(error)
       })
-  }
-
-  const deletePicture = async id => {
-    setLoading(true)
-    const updates = {}
-    updates['/pictures/' + id] = null
-    update(ref(db), updates).then(() => {
-      setLoading(false)
-      setSuccess(true)
-    })
   }
 
   const schema = yup.object().shape({
@@ -78,3 +70,7 @@ export default function DeleteForm ({ handleCancel, idPicture }) {
     </Formik>
   )
 }
+
+const WrappedComponent = withFirebase(DeleteForm)
+
+export default WrappedComponent

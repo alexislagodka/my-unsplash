@@ -137,7 +137,14 @@
   }
 
   .adminZone{
-    @apply bg-violet-500 text-white;
+    @apply 
+    bg-violet-500
+    text-white
+  }
+  .adminZone input {
+    @apply 
+    text-zinc-700
+    dark:text-zinc-100
   }
 
   .lds {

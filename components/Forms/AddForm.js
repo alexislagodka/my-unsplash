@@ -1,13 +1,12 @@
 import React, { useState } from 'react'
+import withFirebase from '../../hoc/withFirebase'
 import * as yup from 'yup'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import Loader from '../Loader/Loader'
 import { useRouter } from 'next/router'
-import db from '../../utils/firebase'
-import { update, push, child, ref } from 'firebase/database'
 import { getAuth } from 'firebase/auth'
 
-export default function AddForm ({ handleCancel }) {
+const AddForm = ({ addPicture, handleCancel }) => {
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState(false)
@@ -30,15 +29,6 @@ export default function AddForm ({ handleCancel }) {
     url: ''
   }
 
-  const addPicture = async picture => {
-    const newPictureKey = push(child(ref(db), 'pictures')).key
-    const updates = {}
-    updates['/pictures/' + newPictureKey] = picture
-    update(ref(db), updates).then(() => setLoading(false))
-    setLoading(false)
-    setSuccess(true)
-  }
-
   const handleSubmit = (values) => {
     setLoading(true)
     const auth = getAuth()
@@ -53,6 +43,8 @@ export default function AddForm ({ handleCancel }) {
         uidowner: uid
       }
       addPicture(picture)
+      setLoading(false)
+      setSuccess(true)
     }
     img.onerror = function () {
       console.log('error')
@@ -104,3 +96,7 @@ export default function AddForm ({ handleCancel }) {
     </Formik>
   )
 }
+
+const WrappedComponent = withFirebase(AddForm)
+
+export default WrappedComponent

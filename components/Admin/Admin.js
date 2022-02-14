@@ -1,24 +1,15 @@
 import React, { useState } from 'react'
-import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth'
+import withFirebase from '../../hoc/withFirebase'
+import { getAuth, signOut } from 'firebase/auth'
 import Loader from '../Loader/Loader'
 import AdminMenu from './AdminMenu'
 import ChangeEmail from '../Forms/ChangeEmail'
 import ChangePassword from '../Forms/ChangePassword'
 import DeleteAccount from '../Forms/DeleteAccount'
 
-export default function Admin ({ handleCancel }) {
+const Admin = ({ user, handleCancel }) => {
   const [action, setAction] = useState('')
   const [loading, setLoading] = useState(false)
-  const [user, setUser] = useState(null)
-  const auth = getAuth()
-
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      setUser(user)
-    } else {
-      setUser(null)
-    }
-  })
 
   const logout = () => {
     setLoading(true)
@@ -65,3 +56,7 @@ export default function Admin ({ handleCancel }) {
     </div>
   )
 }
+
+const WrappedComponent = withFirebase(Admin)
+
+export default WrappedComponent

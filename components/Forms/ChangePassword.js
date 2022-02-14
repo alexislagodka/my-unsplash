@@ -1,17 +1,17 @@
 import React, { useState } from 'react'
+import withFirebase from '../../hoc/withFirebase'
 import * as yup from 'yup'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
-import { getAuth, updatePassword, signInWithEmailAndPassword } from 'firebase/auth'
+import { updatePassword, signInWithEmailAndPassword } from 'firebase/auth'
 import Loader from '../Loader/Loader'
 
-export default function ChangePassword ({ handleCancel }) {
+const ChangePassword = ({ auth, handleCancel }) => {
   const [authError, setAuthError] = useState(null)
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
 
   const handleSubmit = (values) => {
     setLoading(true)
-    const auth = getAuth()
     signInWithEmailAndPassword(auth, auth.currentUser.email, values.password)
       .then(() => {
         updateUserPassword(auth, values.newPassword)
@@ -26,6 +26,7 @@ export default function ChangePassword ({ handleCancel }) {
   const updateUserPassword = (auth, newPassword) => {
     updatePassword(auth.currentUser, newPassword)
       .then(() => {
+        setLoading(false)
         setSuccess(true)
       }).catch((error) => {
         setLoading(false)
@@ -61,7 +62,7 @@ export default function ChangePassword ({ handleCancel }) {
   if (success) {
     return (
       <div>
-        <p>Your password has been changed</p>
+        <p className='text-white'>Your password has been changed</p>
       </div>
     )
   }
@@ -99,3 +100,7 @@ export default function ChangePassword ({ handleCancel }) {
     </Formik>
   )
 }
+
+const WrappedComponent = withFirebase(ChangePassword)
+
+export default WrappedComponent

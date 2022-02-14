@@ -1,35 +1,28 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import withFirebase from '../../hoc/withFirebase'
 import Layout from '../../components/Layout/Layout'
 import Image from 'next/image'
 import Modal from '../../components/Modal/Modal'
 import DeleteForm from '../../components/Forms/DeleteForm'
 import db from '../../utils/firebase'
 import { get, ref, child } from 'firebase/database'
-import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import Link from 'next/link'
 
-export default function PicturePage ({ picture }) {
+const PicturePage = ({ user, picture }) => {
   const pictureId = Object.keys(picture)[0]
   const { src, title, uidowner, width, height } = picture[pictureId].pictureData
   const [isOwner, setIsOwner] = useState(false)
   const [show, setShow] = useState(false)
-  const [user, setUser] = useState(null)
 
-  // Handle Auth
-  const auth = getAuth()
-  onAuthStateChanged(auth, (user) => {
+  useEffect(() => {
     if (user) {
-      setUser(user)
       if (user.uid === uidowner) {
         setIsOwner(true)
       } else {
         setIsOwner(false)
       }
-    } else {
-      setUser(null)
-      setIsOwner(false)
     }
-  })
+  }, [user])
 
   return (
     <Layout>
@@ -100,3 +93,7 @@ export async function getStaticPaths () {
     fallback: false
   }
 }
+
+const WrappedComponent = withFirebase(PicturePage)
+
+export default WrappedComponent
