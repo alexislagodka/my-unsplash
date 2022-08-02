@@ -4,9 +4,9 @@ import * as yup from 'yup'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import Loader from '../Loader/Loader'
 import { useRouter } from 'next/router'
-import { getAuth } from 'firebase/auth'
+import { getAuth, sendEmailVerification } from 'firebase/auth'
 
-const AddForm = ({ addPicture, handleCancel }) => {
+const AddForm = ({ addPicture, handleCancel, user, auth }) => {
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState(false)
@@ -27,6 +27,26 @@ const AddForm = ({ addPicture, handleCancel }) => {
   const initialValues = {
     name: '',
     url: ''
+  }
+
+  const sentVerificationEmail = () => {
+    // const auth = getAuth()
+    console.log(user.email)
+    sendEmailVerification(auth.currentUser)
+      .then(() => {
+        console.log('sendEmail')
+      // The link was successfully sent. Inform the user.
+      // Save the email locally so you don't need to ask the user for it again
+      // if they open the link on the same device.
+        // window.localStorage.setItem('emailForSignIn', user.email)
+      // ...
+      })
+      .catch((error) => {
+        // const errorCode = error.code
+        // const errorMessage = error.message
+        console.log('ERROR')
+        console.log(error)
+      })
   }
 
   const handleSubmit = (values) => {
@@ -52,6 +72,15 @@ const AddForm = ({ addPicture, handleCancel }) => {
       setLoading(false)
     }
     img.src = values.url
+  }
+  if (user) {
+    return (
+      <div className='grid gap-2'>
+        <div>A email was send to {user.email}. Please verify your email to add pictures.</div>
+        <div>You doesn't receive any verification message ?</div>
+        <button onClick={() => sentVerificationEmail()}>Send verification email</button>
+      </div>
+    )
   }
   if (loading) return <div style={{ textAlign: 'center' }}><Loader /></div>
   if (success) {

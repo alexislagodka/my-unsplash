@@ -2,7 +2,11 @@ import React, { useState } from 'react'
 import Loader from '../Loader/Loader'
 import * as yup from 'yup'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth'
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword
+} from 'firebase/auth'
 import ResetPassWord from './ResetPassWord'
 
 export default function LoginForm ({ handleCancel }) {
@@ -12,7 +16,8 @@ export default function LoginForm ({ handleCancel }) {
   const [showResetPwdForm, setSowResestPwdForm] = useState(false)
 
   const schema = yup.object().shape({
-    email: yup.string()
+    email: yup
+      .string()
       .email('Must be a valid email')
       .required('This field is required'),
     password: yup
@@ -45,7 +50,9 @@ export default function LoginForm ({ handleCancel }) {
           console.log(error.code)
           switch (error.code) {
             case 'auth/user-not-found':
-              setAuthError('Sorry your account does not exist. Please try to create account.')
+              setAuthError(
+                'Sorry your account does not exist. Please try to create account.'
+              )
               break
             case 'auth/invalid-email':
               setAuthError('This email is invalid.')
@@ -54,7 +61,9 @@ export default function LoginForm ({ handleCancel }) {
               setAuthError('Wrong password.')
               break
             default:
-              setAuthError('Sorry your account does not exist. Please try to create account.')
+              setAuthError(
+                'Sorry your account does not exist. Please try to create account.'
+              )
           }
         })
     } else {
@@ -86,68 +95,93 @@ export default function LoginForm ({ handleCancel }) {
     resetForm({})
   }
 
-  if (loading) return <div style={{ textAlign: 'center' }}><Loader /></div>
-  if (showResetPwdForm) return <ResetPassWord handleCancel={() => setSowResestPwdForm(false)} />
+  if (loading) {
+    return (
+      <div style={{ textAlign: 'center' }}>
+        <Loader />
+      </div>
+    )
+  }
+  if (showResetPwdForm) { return <ResetPassWord handleCancel={() => setSowResestPwdForm(false)} /> }
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={schema}
       onSubmit={handleSubmit}
     >
-      {({
-        setFieldValue,
-        submitForm
-      }) => (
+      {({ setFieldValue, submitForm }) => (
         <Form className='grid'>
           <h2>Log in to add photos</h2>
           <label htmlFor='email'>Email</label>
-          <Field id='email' name='email' type='text' placeholder='JohnDoe@mail.com' onKeyUp={(event) => { if (event.key === 'Enter') { submitForm() } }} />
+          <Field
+            id='email'
+            name='email'
+            type='text'
+            placeholder='JohnDoe@mail.com'
+            onKeyUp={(event) => {
+              if (event.key === 'Enter') {
+                submitForm()
+              }
+            }}
+          />
           <ErrorMessage name='email' component='small' />
           <label htmlFor='password'>Password</label>
-          <Field id='password' name='password' type='password' placeholder='Password' onKeyUp={(event) => { if (event.key === 'Enter') { submitForm() } }} />
+          <Field
+            id='password'
+            name='password'
+            type='password'
+            placeholder='Password'
+            onKeyUp={(event) => {
+              if (event.key === 'Enter') {
+                submitForm()
+              }
+            }}
+          />
           <ErrorMessage name='password' component='small' />
           {authError}
-          <div className='flex justify-end pt-6'>
-            <button className='cancelButton' type='button' onClick={handleCancel}>
-              Cancel
-            </button>
-            <button
-              className='submitButton'
-              type='button'
-              id='loginButton'
-              onClick={() => {
-                setFieldValue('createAccount', false)
-                setFieldValue('login', true)
-                submitForm()
-              }}
-            >
-              Log In
-            </button>
+          <div className='flex justify-between pt-6'>
+            <div>
+              <button
+                className='adminZone'
+                type='button'
+                id='createAccountButton'
+                onClick={() => {
+                  setFieldValue('login', false)
+                  setFieldValue('createAccount', true)
+                  submitForm()
+                }}
+              >
+                Create account
+              </button>
+            </div>
+            <div>
+              <button
+                className='cancelButton'
+                type='button'
+                onClick={handleCancel}
+              >
+                Cancel
+              </button>
+              <button
+                className='submitButton'
+                type='button'
+                id='loginButton'
+                onClick={() => {
+                  setFieldValue('createAccount', false)
+                  setFieldValue('login', true)
+                  submitForm()
+                }}
+              >
+                Log In
+              </button>
+            </div>
           </div>
           <div>
-            <button
-              className='adminZone'
-              type='button'
-              id='createAccountButton'
-              onClick={() => {
-                setFieldValue('login', false)
-                setFieldValue('createAccount', true)
-                submitForm()
-              }}
-            >
-              Create account
-            </button>
-          </div>
-          <div>
-            {
-              connectTry >= 2 &&
-                <button
-                  type='button'
-                  onClick={() => setSowResestPwdForm(true)}
-                >
-                  Reset password
-                </button>
-            }
+            {connectTry >= 2 && (
+              <button type='button' onClick={() => setSowResestPwdForm(true)}>
+                Reset password
+              </button>
+            )}
           </div>
         </Form>
       )}

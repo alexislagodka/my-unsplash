@@ -45,6 +45,7 @@ const withFirebase = (WrappedComponent) =>
       })
     }
 
+    // Picture Service
     addPicture = picture => {
       console.log(picture)
       const newPictureKey = push(child(ref(db), 'pictures')).key
