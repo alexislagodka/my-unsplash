@@ -4,12 +4,14 @@ import * as yup from 'yup'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import Loader from '../Loader/Loader'
 import { useRouter } from 'next/router'
-import { getAuth, sendEmailVerification } from 'firebase/auth'
+import { sendEmailVerification } from 'firebase/auth'
+import Image from 'next/image'
 
 const AddForm = ({ addPicture, handleCancel, user, auth }) => {
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState(false)
+  const [message, setMessage] = useState('')
 
   const router = useRouter()
   const forceReload = () => {
@@ -29,29 +31,20 @@ const AddForm = ({ addPicture, handleCancel, user, auth }) => {
     url: ''
   }
 
-  const sentVerificationEmail = () => {
-    // const auth = getAuth()
-    console.log(user.email)
+  const handleClick = event => {
+    event.currentTarget.disabled = true
     sendEmailVerification(auth.currentUser)
       .then(() => {
-        console.log('sendEmail')
-      // The link was successfully sent. Inform the user.
-      // Save the email locally so you don't need to ask the user for it again
-      // if they open the link on the same device.
-        // window.localStorage.setItem('emailForSignIn', user.email)
-      // ...
+        setMessage(`An email was sent to ${user.email}. Please click on the link in the mail and refresh the page.`)
       })
       .catch((error) => {
-        // const errorCode = error.code
-        // const errorMessage = error.message
-        console.log('ERROR')
+        setMessage(`Sorry, impossible to send an email to ${user.email}. Please retry.`)
         console.log(error)
       })
   }
 
   const handleSubmit = (values) => {
     setLoading(true)
-    const auth = getAuth()
     const uid = auth.currentUser.uid
     const img = new Image()
     img.onload = function () {
@@ -73,15 +66,22 @@ const AddForm = ({ addPicture, handleCancel, user, auth }) => {
     }
     img.src = values.url
   }
+
+  // Manage render email is not verified
   if (user) {
-    return (
-      <div className='grid gap-2'>
-        <div>A email was send to {user.email}. Please verify your email to add pictures.</div>
-        <div>You doesn&apos;t receive any verification message ?</div>
-        <button onClick={() => sentVerificationEmail()}>Send verification email</button>
-      </div>
-    )
+    if (!user.emailVerified) {
+      return (
+        <div className='grid gap-2'>
+          <div>A email was send to {user.email}. Please verify your email to add pictures.</div>
+          <div>You doesn&apos;t receive any verification message ?</div>
+          <button name='sendVerificationEmail' onClick={(e) => handleClick(e)}>Send verification email</button>
+          { message }
+        </div>
+      )
+    }
   }
+
+  // Manage render adding picture
   if (loading) return <div style={{ textAlign: 'center' }}><Loader /></div>
   if (success) {
     return (
