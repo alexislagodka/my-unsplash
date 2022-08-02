@@ -75,7 +75,7 @@ const AddForm = ({ addPicture, handleCancel, user, auth }) => {
           <div>A email was send to {user.email}. Please verify your email to add pictures.</div>
           <div>You doesn&apos;t receive any verification message ?</div>
           <button name='sendVerificationEmail' onClick={(e) => handleClick(e)}>Send verification email</button>
-          { message }
+          {message}
         </div>
       )
     }

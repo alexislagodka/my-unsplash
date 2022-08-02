@@ -17,7 +17,6 @@ const ChangeEmail = ({ auth, handleCancel }) => {
   const [newEmail, setNewEmail] = useState('')
 
   const handleSubmit = (values) => {
-    console.log(auth)
     setLoading(true)
     signInWithEmailAndPassword(auth, auth.currentUser.email, values.password)
       .then(() => {

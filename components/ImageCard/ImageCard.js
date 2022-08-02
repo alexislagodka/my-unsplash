@@ -17,7 +17,7 @@ export default function ImageCard ({ id, src, title, href, width, height, displa
             blurDataURL={src}
             width={385}
             height={h}
-            quality={50}
+            quality={20}
             priority
           />
         </a>
