@@ -5,7 +5,8 @@ import { ErrorMessage, Field, Form, Formik } from 'formik'
 import {
   getAuth,
   signInWithEmailAndPassword,
-  createUserWithEmailAndPassword
+  createUserWithEmailAndPassword,
+  sendEmailVerification
 } from 'firebase/auth'
 import ResetPassWord from './ResetPassWord'
 
@@ -70,6 +71,7 @@ export default function LoginForm ({ handleCancel }) {
       createUserWithEmailAndPassword(auth, values.email, values.password)
         .then(() => {
           setLoading(false)
+          sendEmailVerification(auth.currentUser)
         })
         .catch((error) => {
           setLoading(false)

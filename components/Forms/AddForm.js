@@ -35,7 +35,7 @@ const AddForm = ({ addPicture, handleCancel, user, auth }) => {
     event.currentTarget.disabled = true
     sendEmailVerification(auth.currentUser)
       .then(() => {
-        setMessage(`An email was sent to ${user.email}. Please click on the link in the mail and refresh the page.`)
+        setMessage(`An email was send to ${user.email}. Please click on the link in the mail and refresh the page.`)
       })
       .catch((error) => {
         setMessage(`Sorry, impossible to send an email to ${user.email}. Please retry.`)

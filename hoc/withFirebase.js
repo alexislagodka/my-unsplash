@@ -44,9 +44,6 @@ const withFirebase = (WrappedComponent) =>
         }
       })
     }
-
-    // Authentification service
-
     
     // Picture service
     addPicture = picture => {
