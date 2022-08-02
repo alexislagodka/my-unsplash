@@ -77,7 +77,7 @@ const AddForm = ({ addPicture, handleCancel, user, auth }) => {
     return (
       <div className='grid gap-2'>
         <div>A email was send to {user.email}. Please verify your email to add pictures.</div>
-        <div>You doesn't receive any verification message ?</div>
+        <div>You doesn&apos;t receive any verification message ?</div>
         <button onClick={() => sentVerificationEmail()}>Send verification email</button>
       </div>
     )
