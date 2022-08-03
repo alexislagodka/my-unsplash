@@ -26,15 +26,6 @@ const NavBar = ({ user }) => {
     }
   }
 
-  // let renderAddForm
-  // if (user) {
-  //   if (user.emailVerified) {
-  //     renderAddForm = <AddForm handleCancel={() => setShowForm(false)} />
-  //   } else {
-  //     renderAddForm = <div>A email was send to {user.email}. Please verify your email to add pictures.</div>
-  //   }
-  // }
-
   return (
     <nav className='w-full pt-6 max-w-7xl mx-auto pt-12 pb-6 px-4 sm:px-6 lg:px-8'>
       {user && <ButtonAdmin handleClick={() => setShowAdmin(true)}>&#xE853; Profile</ButtonAdmin>}
