@@ -2,23 +2,14 @@ import React, { Component } from 'react'
 // firebase
 import db from '../utils/firebase'
 import {
-  getDatabase,
   ref,
-  set,
   push,
-  onValue,
-  off,
   child,
   update
 } from 'firebase/database'
 import { 
   getAuth,
-  onAuthStateChanged,
-  updateEmail,
-  signInWithEmailAndPassword,
-  sendEmailVerification,
-  updatePassword,
-  deleteUser
+  onAuthStateChanged
 } from 'firebase/auth'
 
 
