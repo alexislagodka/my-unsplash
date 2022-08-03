@@ -31,8 +31,8 @@ const NavBar = ({ user }) => {
       {user && <ButtonAdmin handleClick={() => setShowAdmin(true)}>&#xE853; Profile</ButtonAdmin>}
       <div className='md:flex justify-between items-center'>
         <div className='md:flex justify-center items-center md:justify-start w-full'>
-          <div className='p-6'>
-            <div className='relative h-8 md:w-40'>
+          <div className='p-6 flex justify-center '>
+            <div className='relative h-8 w-40'>
               <Link href='/' className='h-8'>
                 <a>
                   <Image src={logo} alt='logo' layout='fill' />
