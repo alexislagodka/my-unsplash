@@ -42,7 +42,7 @@ const DeleteForm = ({ auth, deletePicture, handleCancel, idPicture }) => {
     return (
       <div>
         <p>The picture was deleted successfully.</p>
-        <Link href='/'><a>Go back to the list</a></Link>
+        <Link href='/'>Go back to the list</Link>
       </div>
     )
   }

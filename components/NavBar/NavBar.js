@@ -34,9 +34,9 @@ const NavBar = ({ user }) => {
           <div className='p-6 flex justify-center '>
             <div className='relative h-8 w-40'>
               <Link href='/' className='h-8'>
-                <a>
-                  <Image src={logo} alt='logo' layout='fill' />
-                </a>
+
+                <Image src={logo} alt='logo' layout='fill' />
+
               </Link>
             </div>
           </div>

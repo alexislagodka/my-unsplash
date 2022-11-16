@@ -10,7 +10,8 @@ import Link from 'next/link'
 
 const PicturePage = ({ user, picture }) => {
   const pictureId = Object.keys(picture)[0]
-  const { src, title, uidowner, width, height } = picture[pictureId].pictureData
+  const { src, title, uidowner, width, height } =
+    picture[pictureId].pictureData
   const [isOwner, setIsOwner] = useState(false)
   const [show, setShow] = useState(false)
 
@@ -27,41 +28,47 @@ const PicturePage = ({ user, picture }) => {
   return (
     <Layout>
       <main className='w-full h-full flex flex-col items-center'>
-        {
-        Object.keys(picture).length === 0
-          ? <h3>This pictures does not exist</h3>
-          : <div className='w-full px-2 max-w-7xl'>
-            <Link href='/'>
-              <a className='text-green-600'>&#xE5C4; Back</a>
-            </Link>
-            <div className='flex justify-center items-center py-3'>
-              <Image
-                src={src}
-                alt={title}
-                width={width / 2}
-                height={height / 2}
-              />
+        {Object.keys(picture).length === 0
+          ? (
+            <h3>This pictures does not exist</h3>
+            )
+          : (
+            <div className='w-full px-2 max-w-7xl'>
+              <Link href='/' className='text-green-600'>
+                &#xE5C4; Back
+              </Link>
+              <div className='flex justify-center items-center py-3'>
+                <Image
+                  src={src}
+                  alt={title}
+                  width={width / 2}
+                  height={height / 2}
+                />
+              </div>
             </div>
-            </div>
-      }
-        {
-        isOwner && <div className='flex justify-center items-center h-24'>
-          <button className='deleteButton' onClick={() => setShow(true)}>Delete this picture</button>
-        </div>
-
-      }
-        {
-        (show && isOwner) &&
+            )}
+        {isOwner && (
+          <div className='flex justify-center items-center h-24'>
+            <button className='deleteButton' onClick={() => setShow(true)}>
+              Delete this picture
+            </button>
+          </div>
+        )}
+        {show && isOwner && (
           <Modal show={show} handleClose={() => setShow(false)}>
-            <DeleteForm handleCancel={() => setShow(false)} idPicture={pictureId} />
+            <DeleteForm
+              handleCancel={() => setShow(false)}
+              idPicture={pictureId}
+            />
           </Modal>
-      }
+        )}
       </main>
     </Layout>
   )
 }
 
-export async function getStaticProps ({ params }) { // Pré-rendu avec récupération de données côté serveur
+export async function getStaticProps ({ params }) {
+  // Pré-rendu avec récupération de données côté serveur
   const res = await get(child(ref(db), `pictures/${params.id}`))
   let picture = {}
   if (res.exists()) {
@@ -84,7 +91,7 @@ export async function getStaticPaths () {
   const res = await get(child(ref(db), 'pictures'))
   const data = await res.val()
 
-  const paths = Object.entries(data).map(pic => ({
+  const paths = Object.entries(data).map((pic) => ({
     params: { id: pic[0] }
   }))
 
